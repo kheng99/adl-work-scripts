@@ -59,6 +59,11 @@ for file in files:
             if user_input.lower() in v.lower():
                 emp_id = k
                 break
+
+    if not inactive[emp_id]: # Empty string is falsey value; essentially checking if the associated name is empty
+        print("EMPLOYEE ID DOES NOT HAVE AN ASSOCIATED NAME, SKIPPING")
+        break
+    
     name = f"{'_'.join(inactive[emp_id].split(' '))}_{emp_id}.pdf"
     os.rename(file, name)
     print(f"RENAMED {file} TO {name}")
