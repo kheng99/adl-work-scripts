@@ -18,27 +18,27 @@ filter_words = [] # Add each word that you want filtered out of the employee nam
 employees = dict()
 for filename in filenames:
     with open(filename, 'r') as file:
-    reader = csv.reader(file)
-    for row in reader:
-        employee_name = row[emp_name_row_num[filenames.index(filename)]].split(' ')
-        employee_id = 0
-        # Removing words from the employee name that would directly conflict with Windows file naming rules
-        for word in filter_words:
+        reader = csv.reader(file)
+        for row in reader:
+            employee_name = row[emp_name_row_num[filenames.index(filename)]].split(' ')
+            employee_id = 0
+            # Removing words from the employee name that would directly conflict with Windows file naming rules
+            for word in filter_words:
+                try:
+                    employee_name.remove(word)
+                except ValueError:
+                    pass
             try:
-                employee_name.remove(word)
+                employee_id = int(row[emp_id_row_num[filenames.index(filename)]])
+                # To deal with multiple files having potential overlaps
+                if employee_id in employees:
+                    pass
             except ValueError:
-                pass
-        try:
-            employee_id = int(row[emp_id_row_num[filenames.index(filename)]])
-            # To deal with multiple files having potential overlaps
-            if employee_id in employees:
-                pass
-        except ValueError:
-            pass # This implies the employee in question does NOT exit, hence skipping
-            
-        # Sanitizing the employee name through removing weird UTF-8 characters by encoding in, and
-        # decoding back to, ASCII while skipping characters that can't be converted
-        employees[employee_id] = ' '.join(employee_name).encode('ascii', 'ignore').decode('ascii')
+                pass # This implies the employee in question does NOT exit, hence skipping
+                
+            # Sanitizing the employee name through removing weird UTF-8 characters by encoding in, and
+            # decoding back to, ASCII while skipping characters that can't be converted
+            employees[employee_id] = ' '.join(employee_name).encode('ascii', 'ignore').decode('ascii')
 
 print("Loading CSV files done!")
 print("PLEASE SET CHROME OR ANY WEB BROWSERS AS THE DEFAULT APP FOR PDF FILES BEFORE CONTINUING.")
