@@ -66,7 +66,7 @@ for file in files:
                 
     if not employees[emp_id]: # Empty string is falsey value; essentially checking if the associated name is empty
         print("EMPLOYEE ID DOES NOT HAVE AN ASSOCIATED NAME, SKIPPING")
-        pass
+        continue
         
     name = f"{'_'.join(employees[emp_id].split(' '))}_{emp_id}.pdf"
     os.rename(file, name)
