@@ -65,8 +65,8 @@ for file in files:
                 emp_id = k
                 
     if not employees[emp_id]: # Empty string is falsey value; essentially checking if the associated name is empty
-        print("EMPLOYEE ID DOES NOT HAVE AN ASSOCIATED NAME, SKIPPING")
-        continue
+        print("EMPLOYEE ID DOES NOT HAVE AN ASSOCIATED NAME, please type their name manually.")
+        employees[emp_id] = input("Enter name here: ")
         
     name = f"{'_'.join(employees[emp_id].split(' '))}_{emp_id}.pdf"
     os.rename(file, name)
